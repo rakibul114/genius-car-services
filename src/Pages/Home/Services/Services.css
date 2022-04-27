@@ -1,0 +1,24 @@
+.services-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+/* Services responsive */
+@media only screen and (min-width: 576px) {
+    .services-container{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+}
+@media only screen and (min-width: 768px) {
+    .services-container{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+}
+@media only screen and (man-width: 992px) {
+    .services-container{
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+}
