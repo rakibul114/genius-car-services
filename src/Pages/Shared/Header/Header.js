@@ -16,10 +16,10 @@ const Header = () => {
 
     return (
       <>
-        <Navbar collapseOnSelect expand="lg" sticky='top' bg="primary" variant="dark">
+        <Navbar className='py-4 shadow' collapseOnSelect expand="lg" sticky='top' bg="primary" variant="dark">
           <Container>
                     <Navbar.Brand as={Link} to="/">
-                    <img src={logo} alt="" height={30}/>
+                    <img src={logo} alt="" height={40}/>
                     
                     </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
