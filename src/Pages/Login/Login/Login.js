@@ -3,7 +3,10 @@ import { Button, Form } from 'react-bootstrap';
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import auth from '../../../firebase.init';
+import Loading from '../../Shared/Loading/Loading';
 import SocialLogin from '../SocialLogin/SocialLogin';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
     const emailRef = useRef('');
@@ -18,6 +21,10 @@ const Login = () => {
     useSignInWithEmailAndPassword(auth);
   
   const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
+
+  if (loading || sending) {
+    return <Loading></Loading>;
+  }
     
     if (user) {
         navigate(from, { replace: true });
@@ -46,8 +53,13 @@ const Login = () => {
   
   const resetPassword = async () => {
     const email = emailRef.current.value;
-    await sendPasswordResetEmail(email);
-    alert("Sent email");
+    if (email) {
+      await sendPasswordResetEmail(email);
+      toast("Sent email");
+    }
+    else {
+      toast('Please enter your email address');
+    }
   }
 
     return (
@@ -76,8 +88,8 @@ const Login = () => {
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="Check me out" />
           </Form.Group>
-          <div className='text-center'>
-            <Button className='w-75 mb-2' variant="primary" type="submit">
+          <div className="text-center">
+            <Button className="w-75 mb-2" variant="primary" type="submit">
               Login
             </Button>
           </div>
@@ -95,15 +107,14 @@ const Login = () => {
         </p>
         <p className="mt-2">
           Forget password?{" "}
-          <Link
-            to="/register"
-            className="text-primary text-decoration-none"
+          <button className="text-primary text-decoration-none btn btn-link"
             onClick={resetPassword}
           >
             Reset Password
-          </Link>
+          </button>
         </p>
         <SocialLogin></SocialLogin>
+        <ToastContainer />
       </div>
     );
 };
