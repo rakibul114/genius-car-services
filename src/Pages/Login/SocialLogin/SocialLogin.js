@@ -1,4 +1,6 @@
 import React from 'react';
+import './SocialLogin.css';
+import googleIcon from '../../../images/google.png';
 
 const SocialLogin = () => {
     return (
@@ -7,10 +9,12 @@ const SocialLogin = () => {
           <div style={{ height: "1px" }} className="bg-primary w-50"></div>
           <p className="mt-2 px-3">or</p>
           <div style={{ height: "1px" }} className="bg-primary w-50"></div>
-            </div>
-            <div>
-            <button className='btn btn-primary w-50'>Google Sign In</button>
-            </div>
+        </div>
+        <div className="text-center">
+          <button className="google-button w-75 p-2 bg-light rounded">
+            <img height={40} src={googleIcon} alt="" /> Google Sign In
+          </button>
+        </div>
       </div>
     );
 };
