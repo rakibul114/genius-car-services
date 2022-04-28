@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import auth from '../../../firebase.init';
 import SocialLogin from '../SocialLogin/SocialLogin';
@@ -13,13 +13,25 @@ const Login = () => {
 
     let from = location.state?.from?.pathname || "/";
 
+    let errorElement;
     const [signInWithEmailAndPassword, user, loading, error] =
-        useSignInWithEmailAndPassword(auth);
+    useSignInWithEmailAndPassword(auth);
+  
+  const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
     
     if (user) {
         navigate(from, { replace: true });
     }
 
+    
+    if (error) {
+      errorElement = (
+        <div>
+          <p className="text-danger">Error: {error?.message}</p>
+        </div>
+      );
+    }  
+  
     const handleSubmit = event => {
         event.preventDefault();
         const email = emailRef.current.value;
@@ -30,7 +42,13 @@ const Login = () => {
 
     const navigateRegister = event => {
         navigate('/register');
-    };
+  };
+  
+  const resetPassword = async () => {
+    const email = emailRef.current.value;
+    await sendPasswordResetEmail(email);
+    alert("Sent email");
+  }
 
     return (
       <div className="container w-50 mx-auto bg-light p-5 shadow mt-5 rounded">
@@ -44,9 +62,6 @@ const Login = () => {
               placeholder="Enter email"
               required
             />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -61,10 +76,13 @@ const Login = () => {
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="Check me out" />
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Login
-          </Button>
+          <div className='text-center'>
+            <Button className='w-75 mb-2' variant="primary" type="submit">
+              Login
+            </Button>
+          </div>
         </Form>
+        {errorElement}
         <p className="mt-2">
           New to Genius Car?{" "}
           <Link
@@ -74,8 +92,18 @@ const Login = () => {
           >
             Please Register
           </Link>
-            </p>
-            <SocialLogin></SocialLogin>
+        </p>
+        <p className="mt-2">
+          Forget password?{" "}
+          <Link
+            to="/register"
+            className="text-primary text-decoration-none"
+            onClick={resetPassword}
+          >
+            Reset Password
+          </Link>
+        </p>
+        <SocialLogin></SocialLogin>
       </div>
     );
 };

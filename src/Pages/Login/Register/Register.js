@@ -1,10 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.init";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Register = () => {
+  const [agree, setAgree] = useState(false);
     const [createUserWithEmailAndPassword, user, loading, error] =
       useCreateUserWithEmailAndPassword(auth);
 
@@ -18,8 +20,11 @@ const Register = () => {
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    
+    // const agree = event.target.terms.checked;
+    if (agree) {
       createUserWithEmailAndPassword(email, password);
+    }
+    
   };
 
   const navigateLogin = (event) => {
@@ -65,11 +70,25 @@ const Register = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
+            <Form.Check
+              className={agree ? "text-primary" : "text-danger"}
+              onClick={() => setAgree(!agree)}
+              type="checkbox"
+              label="Accept Genius Car Terms and Conditions"
+              name="terms"
+              id="terms"
+            />
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Register
-          </Button>
+          <div className="text-center">
+            <Button
+              disabled={!agree}
+              className="w-75 mb-2"
+              variant="primary"
+              type="submit"
+            >
+              Register
+            </Button>
+          </div>
         </Form>
         <p className="mt-2">
           Already have an account?{" "}
@@ -81,6 +100,7 @@ const Register = () => {
             Please Login
           </Link>
         </p>
+        <SocialLogin></SocialLogin>
       </div>
     </div>
   );
