@@ -9,7 +9,7 @@ import Loading from '../../Shared/Loading/Loading';
 
 const RequireAuth = ({ children }) => {
     const [user, loading] = useAuthState(auth);
-    const [sendEmailVerification, sending, error] =
+    const [sendEmailVerification] =
       useSendEmailVerification(auth);
 
     const location = useLocation();

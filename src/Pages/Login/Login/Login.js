@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import auth from '../../../firebase.init';
 import Loading from '../../Shared/Loading/Loading';
 import SocialLogin from '../SocialLogin/SocialLogin';
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PageTitle from '../../Shared/PageTitle/PageTitle';
 
@@ -116,7 +116,7 @@ const Login = () => {
           </button>
         </p>
         <SocialLogin></SocialLogin>
-        <ToastContainer />
+        
       </div>
     );
 };
