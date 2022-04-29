@@ -8,27 +8,28 @@ import { toast } from "react-toastify";
 
 const Checkout = () => {
   const { serviceId } = useParams();
-    const [service] = useServiceDetail(serviceId);
-    const [user] = useAuthState(auth);
+  const [service] = useServiceDetail(serviceId);
+  const [user] = useAuthState(auth);
 
-    const handlePlaceOrder = event => {
-        event.preventDefault();
-        const order = {
-            email: user.email,
-            service: service.name,
-            serviceId: serviceId,
-            address: event.target.address.value,
-            phone: event.target.phone.value
-        };
-        axios.post("http://localhost:5000/order", order).then((response) => {
-            const { data } = response;
-            if (data.insertedId) {
-                toast('Your order is booked!');
-                event.target.reset();
-            }
-        });
+  const handlePlaceOrder = (event) => {
+    event.preventDefault();
+    const order = {
+      email: user.email,
+      service: service.name,
+      serviceId: serviceId,
+      address: event.target.address.value,
+      phone: event.target.phone.value,
     };
-    
+    axios
+      .post("https://secret-island-02232.herokuapp.com/order", order)
+      .then((response) => {
+        const { data } = response;
+        if (data.insertedId) {
+          toast("Your order is booked!");
+          event.target.reset();
+        }
+      });
+  };
 
   return (
     <div className="w-50 mx-auto">
@@ -63,7 +64,8 @@ const Checkout = () => {
           name="service"
           id=""
           placeholder="Service"
-          required readOnly
+          required
+          readOnly
         />
         <input
           className="w-100 mb-2"
