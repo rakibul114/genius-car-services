@@ -38,7 +38,7 @@ const Checkout = () => {
           className="w-100 mb-2"
           type="text"
           name="name"
-          value={user.displayName}
+          value={user?.displayName}
           id=""
           placeholder="Name"
           required
@@ -49,7 +49,7 @@ const Checkout = () => {
           className="w-100 mb-2"
           type="email"
           name="email"
-          value={user.email}
+          value={user?.email}
           id=""
           placeholder="Email"
           required
