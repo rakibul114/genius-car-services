@@ -9,7 +9,7 @@ import Login from './Pages/Login/Login/Login';
 import Register from './Pages/Login/Register/Register';
 import RequireAuth from './Pages/Login/RequireAuth/RequireAuth';
 import ManageServices from './Pages/ManageServices/ManageServices';
-import Order from './Pages/Order/Order';
+import Orders from './Pages/Orders/Orders';
 import ServiceDetail from './Pages/ServiceDetail/ServiceDetail';
 import Footer from './Pages/Shared/Footer/Footer';
 import Header from './Pages/Shared/Header/Header';
@@ -57,7 +57,7 @@ function App() {
           path="/orders"
           element={
             <RequireAuth>
-              <Order></Order>
+              <Orders></Orders>
             </RequireAuth>
           }
         ></Route>
