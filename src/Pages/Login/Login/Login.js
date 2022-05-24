@@ -57,7 +57,7 @@ const Login = () => {
     navigate(from, { replace: true });
   };
 
-  const navigateRegister = (event) => {
+  const navigateRegister = () => {
     navigate("/register");
   };
 
